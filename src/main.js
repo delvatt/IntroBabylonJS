@@ -58,14 +58,6 @@
             var meshs = scene.getMeshByID("ethanol");
             console.log("meshes" + meshs.id);
             meshs.fromBallToStickBall(BALL_AND_STICK_SCALE_VALUE, scene);
-           // var meshes = scene.getActiveMeshes();
-           // console.log("Scene meshes: " + meshes.length)
-           // for (var i = 0; i < meshes.length; i++) {
-              //  console.log("meshes " + i + ": " + meshes[i]); 
-                     // if(meshes[i].name ==="Molecule"){
-                      //  meshes[i].fromBallToStickBall(BALL_AND_STICK_SCALE_VALUE);
-                     // }
-                   //};
               }
     });
 
@@ -74,14 +66,6 @@
             var meshs = scene.getMeshByID("ethanol");
             console.log("meshes" + meshs.id);
             meshs.fromStickBallToBall(BALL_AND_STICK_SCALE_VALUE, scene);
-           // var meshes = scene.getActiveMeshes();
-           // console.log("Scene meshes: " + meshes.length)
-           // for (var i = 0; i < meshes.length; i++) {
-              //  console.log("meshes " + i + ": " + meshes[i]); 
-                     // if(meshes[i].name ==="Molecule"){
-                      //  meshes[i].fromBallToStickBall(BALL_AND_STICK_SCALE_VALUE);
-                     // }
-                   //};
               }
     });
 
@@ -99,7 +83,7 @@
         };
 
     canvas.addEventListener("dblclick", function(evt){
-       
+
       var pickResult = scene.pick(evt.clientX, evt.clientY);
       if(pickResult.hit && pickResult.pickedMesh){
          alert(pickResult.pickedMesh.label + " mol: "+ pickResult.pickedMesh.parent.label);
