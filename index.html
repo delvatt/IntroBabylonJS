@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>KinectPedia</title>
+
+    <script src="libs/hand.js"></script>
+    <script src="libs/babylon.1.13.js"></script>
+
+    <script type="text/javascript" src="src/main.js"></script>
+    <script type="text/javascript" src="src/runtime.js"></script>
+    <script type="text/javascript" src="src/atom.js"></script>
+    <script type="text/javascript" src="src/molecule.js"></script>
+    <script type="text/javascript" src="src/utils.js"></script>
+
+
+    <style type="text/css">
+
+        html,body,#renderCanvas {
+            width:100%;
+            height:100%;
+            padding:0;
+            margin:0;
+            overflow: hidden;
+        }
+
+        .button {
+    cursor: pointer;
+    z-index: 1;
+}
+
+    .button:hover {
+        transform: scale3d(0.9, 0.9, 0.9);
+        -webkit-transform: scale3d(0.9, 0.9, 0.9);
+    }
+
+.buttonControlPanel {
+    height: 3em;
+    width: 17em;
+    margin: 5px 0px 5px 0px;
+    line-height: 2.2em;
+}
+
+.smallButtonControlPanel {
+    height: 2.2em;
+    width: 17em;
+    margin: 2px 0px 2px 0px;
+}
+
+    .smallButtonControlPanel.pushed {
+        border: 2px solid #00008b;
+    }
+
+.buttonImg {
+    height: 32px;
+    width: 32px;
+    float: left;
+}
+
+button {
+    border: 1px solid #888888;
+    background-color: #DEDEDE;
+    color: #888888;
+}
+
+    button:hover {
+        background-color: #EEEEEE;
+    }
+
+    button:active {
+        transform: scale(0.98);
+        -webkit-transform: scale(0.98);
+    }
+
+.hidden {
+    display: none;
+}
+
+
+
+#renderZone {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.4s ease-in-out;
+    -webkit-transition: -webkit-transform 0.4s ease-in-out;
+}
+
+
+#fps {
+    position: absolute;
+    right: 20px;
+    top: 5em;
+    font-size: 20px;
+    color: white;
+    text-shadow: 2px 2px 0 black;
+}
+
+#stats {
+    position: absolute;
+    right: 20px;
+    top: 11em;
+    font-size: 14px;
+    color: white;
+    text-align: right;
+    text-shadow: 2px 2px 0 black;
+}
+
+#status {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    font-size: 14px;
+    color: white;
+    text-shadow: 2px 2px 0 black;
+}
+
+#controlPanel {
+    position: absolute;
+    height: 250px;
+    bottom: 0px;
+    width: 500px;
+    left: 50%;
+    margin-left: -250px;
+    z-index: 10;
+    transition: transform 0.25s ease-in-out;
+    transform: translateY(250px);
+    -webkit-transition: -webkit-transform 0.25s ease-in-out;
+    -webkit-transform: translateY(250px);
+}
+
+.tag {
+    position: absolute;
+    background-color: #EEEEEE;
+    height: 40px;
+    width: 150px;
+    left: 50%;
+    padding: 5px;
+    color: #888888;
+    font-size: 18px;
+    margin-left: -75px;
+    text-align: center;
+    top: -40px;
+    border-top-left-radius: 10px 10px;
+    border-top-right-radius: 10px 10px;
+}
+
+#controlsZone {
+    width: 100%;
+    height: 100%;
+    background-color: #EEEEEE;
+    color: #888888;
+    padding: 20px;
+    border-top-left-radius: 10px 10px;
+    border-top-right-radius: 10px 10px;
+}
+
+#cameraPanel {
+    position: absolute;
+    right: 0px;
+    width: 17em;
+    top: 2em;
+    z-index: 10;
+    transition: transform 0.25s ease-in-out;
+    transform: translateX(17em);
+    -webkit-transition: -webkit-transform 0.25s ease-in-out;
+    -webkit-transform: translateX(17em);
+}
+
+.cameraTag {
+    position: absolute;
+    background-color: #EEEEEE;
+    height: 50px;
+    width: 50px;
+    top: 0px;
+    left: -50px;
+    border-top-left-radius: 10px 10px;
+    border-bottom-left-radius: 10px 10px;
+    z-index: 100;
+}
+
+#clickableTag {
+    cursor: hand;
+    background-color: transparent;
+}
+
+#cameraClickableTag {
+    cursor: hand;
+    background-color: transparent;
+}
+
+#objectPropertiesZone {
+    width: 100%;
+    height: 100%;
+    background-color: #EEEEEE;
+    color: #888888;
+    color: #888888;
+    font-size: 20px;
+    padding: 20px;
+}
+
+#cameraControlsZone {
+    width: 100%;
+    height: 100%;
+    background-color: #EEEEEE;
+    color: #888888;
+    padding: 20px;
+    border-bottom-left-radius: 10px 10px;
+}
+
+#leftPart {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    height: 40%;
+    width: 30%;
+}
+
+#rightPart {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 40%;
+    width: 50%;
+}
+
+    </style>
+</head>
+<body>
+    <div id="renderZone" class="movedRight">
+            <canvas id="renderCanvas"></canvas>
+            <div id="fps"></div>
+            <div id="stats"></div>
+            <div id="status"></div>
+            <div id="controlPanel">
+                <div id="controlsZone">
+                    <div id="leftPart">
+                        <p>
+                            <label><input name="viewMode" type="radio" id="ball" checked />Ball</label>
+                        </p>
+                        <p>
+                            <label><input name="viewMode" type="radio" id="ballstick" />Ball and Stick</label>
+                        </p>
+                        <p>
+                            <label><input name="viewMode" type="radio" id="stick"/>Stick</label>
+                        </p>
+                        <p>
+                            <label><input name="viewMode" type="radio" id="wireframe"/>Wireframe</label>
+                        </p>
+                        <p>
+                            <label><input name="viewMode" type="radio" id="postprocess" />Post-process</label>
+                        </p>
+                    </div>
+                    <div id="rightPart">
+                        <p>
+                            Hardware scaling:
+                            <select id="hardwareScalingLevel">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </p>
+                        <p id="extensions"></p>
+                        <p>
+                            <button id="fullscreen">Switch fullscreen mode</button>
+                        </p>
+                    </div>
+                </div>
+                <div class="tag">Panneau de controle</div>
+                <div class="tag" id="clickableTag"></div>
+            </div>
+            <div id="cameraPanel">
+                <div id="objectPropertiesZone">
+                    <div id="objPropTitle"> Propriétes</div>
+                    <div id="objPropContent">
+                        <p>
+                            <div id="molLabel"></div>
+                        </p>
+                    </div>
+                </div>
+                <div id="cameraControlsZone">
+                    Active camera:<br>
+                    <select id="camerasList"></select>
+                    <p>
+                        Change control method:
+                        <button class="buttonControlPanel" id="touchCamera">
+                            Touch camera
+                        </button>
+                        <button class="buttonControlPanel" id="deviceOrientationCamera">
+                            Device orientation camera
+                        </button>
+                        <button class="buttonControlPanel" id="gamepadCamera">
+                                   Gamepad camera
+                        </button>
+                        <button class="buttonControlPanel" id="virtualJoysticksCamera">
+                                    irtual joysticks camera
+                        </button>
+                        <button class="buttonControlPanel" id="anaglyphCamera">
+                                    Anaglyph camera
+                        </button>
+                    </p>
+                    <p>
+                        Post-processes:
+                        <button class="smallButtonControlPanel" id="toggleFxaa">Toggle FXAA (antialiasing)</button>
+                        <button class="smallButtonControlPanel" id="toggleFsaa4">Toggle FSAA 4X (antialiasing)</button>
+                        <button class="smallButtonControlPanel" id="toggleBandW">Toggle Black and white</button>
+                        <button class="smallButtonControlPanel" id="toggleSepia">Toggle Sepia</button>
+                    </p>
+                </div>
+                <div class="cameraTag"></div>
+                <div class="cameraTag" id="cameraClickableTag"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
