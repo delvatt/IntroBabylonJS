@@ -1,16 +1,22 @@
-//deuxiem version
-//devra privatiser les champs plutar et ajouter des getter et setter !
+/*
+utils.js: Utilities functions.
+Don't mind Globals !
 
-getTranslationVect = function(vstart, vend) {
-    var distance = BABYLON.Vector3.Distance(vstart, vend);
-    v1 = vstart.subtract(vend);
-    v1.normalize();
-    return v1;
-}
+ */
+
+// Globals (To avoid)
+
+INIT_BALL_SCALE_VALUE = 1.5;
+BALL_AND_STICK_SCALE_VALUE = 3.5;
+
+BALL_VIEW_MODE  = 0;
+BALL_AND_STICK_VIEW_MODE =1 ;
 
 
+//Bound: the molecular bound between 2 atoms.
+//This create a cylinder between 2 given 3D vectors (spheres)
+//Thanks to David Catuhe (@deltakosh) for his priceless help :-)
 Bound = function(name, vstart, vend, scene) {
-
     var distance = BABYLON.Vector3.Distance(vstart, vend);
 
     BABYLON.Mesh.call(this, "Bound", scene);
@@ -27,7 +33,7 @@ Bound = function(name, vstart, vend, scene) {
     // First of all we have to set the pivot not in the center of the cylinder:
     this.setPivotMatrix(BABYLON.Matrix.Translation(0, -distance / 2, 0));
 
-    // Then move the cylinder to red sphere
+    // Then move the cylinder to last sphere
     this.position = vend;
 
     // Then find the vector between spheres
@@ -57,13 +63,10 @@ Bound = function(name, vstart, vend, scene) {
 };
 
 Bound.prototype = Object.create(BABYLON.Mesh.prototype);
-
-// une autres ligne mystique
 Bound.prototype.constructor = Bound;
 
 
 Bound.prototype._initMovement = function() {
-
     var onKeyDown = function(evt) {
         console.log(evt.keyCode);
         if (evt.keyCode == 37) {
@@ -99,82 +102,10 @@ Bound.prototype.move = function() {
     }
 };
 
-// The molecular data structure as an undirected Graph
-
-// construct a new molecular graph node (ideally an atom and its further connexion)
-var Vertex = function(value) {
-    this.value = value;
-    this.next = null;
-};
-
-
-// this initialise the  list of adjacent Atoms of the molecule
-var AdjacencyList = function() {
-    this.head = null;
-    this.tail = null;
+// Get the translation vect between 2 vectors
+getTranslationVect = function(vstart, vend) {
+    var distance = BABYLON.Vector3.Distance(vstart, vend);
+    v1 = vstart.subtract(vend);
+    v1.normalize();
+    return v1;
 }
-
-// the molecular graph Data Structure
-var Graph = function() {
-    this._numOfEdges = 0;
-    this._adjacencyLists = {};
-};
-
-
-// Add a new Atom in the list.
-AdjacencyList.prototype.add = function(value) {
-    var vertex = new Vertex(value);
-    if (!this.head && !this.tail) {
-        this.head = vertex;
-    } else {
-        this.tail.next = vertex;
-    }
-    this.tail = vertex;
-};
-
-
-// Remove the Atom from the list.
-AdjacencyList.prototype.remove = function() {
-    var detached = null;
-    if (this.head === this.tail) {
-        return null;
-    } else {
-        detached = this.head;
-        this.head = this.head.next;
-        detached.next = null;
-        return detached;
-    }
-};
-
-// Ad a moleular bound between two Atoms
-Graph.prototype.addEdge = function(v, w) {
-    this._adjacencyLists[v] = this._adjacencyLists[v] ||
-        new AdjacencyList();
-    this._adjacencyLists[w] = this._adjacencyLists[w] ||
-        new AdjacencyList();
-    this._adjacencyLists[v].add(w);
-    this._adjacencyLists[w].add(v);
-    this._numOfEdges++;
-};
-
-// return the lists of Atoms within the molecule
-Graph.prototype.getVertices = function() {
-    return Object.keys(this._adjacencyLists);
-};
-
-
-// Walk Through  the Graph
-Graph.prototype.walkGraph = function(atomslist, func) {
-    var adjString = '';
-    var currentNode = null;
-    var vertices = this.getVertices();
-        console.log(vertices.length + " vertices, " +
-        this._numOfEdges + " edges");
-    if (atomslist.length !== vertices.length) {
-        return;
-    };
-
-    for (var i = 0; i < vertices.length; i++) {
-       func(vertices[i],this._adjacencyLists );
-    }
-};

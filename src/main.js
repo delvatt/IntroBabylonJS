@@ -1,4 +1,8 @@
-﻿window.onload = function(){
+﻿﻿/*
+main.js: Rendering function.
+ */
+
+window.onload = function(){
     var canvas = document.getElementById("renderCanvas");
 
     var controlPanel = document.getElementById("controlPanel");
@@ -55,17 +59,29 @@
 
     ballstick.addEventListener("click", function () {
         if (scene) {
-            var meshs = scene.getMeshByID("ethanol");
-            console.log("meshes" + meshs.id);
-            meshs.fromBallToStickBall(BALL_AND_STICK_SCALE_VALUE, scene);
+           var meshes = scene.getActiveMeshes();
+           console.log("Scene meshes: " + meshes.length);
+           console.log("meshes: " + meshes.data[0].id);
+            for (var i = 0; i < meshes.length; i++) {
+                console.log("meshes " + i + ": " + meshes.data[i].name);
+                      if(meshes.data[i].name ==="Molecule"){
+                      meshes.data[i].fromBallToStickBall(BALL_AND_STICK_SCALE_VALUE, scene);
+                      }
+                  };
               }
     });
 
       ball.addEventListener("click", function () {
         if (scene) {
-            var meshs = scene.getMeshByID("ethanol");
-            console.log("meshes" + meshs.id);
-            meshs.fromStickBallToBall(BALL_AND_STICK_SCALE_VALUE, scene);
+          var meshes = scene.getActiveMeshes();
+           console.log("Scene meshes: " + meshes.length);
+           console.log("meshes: " + meshes.data[0].id);
+            for (var i = 0; i < meshes.length; i++) {
+                console.log("meshes " + i + ": " + meshes.data[i].name);
+                      if(meshes.data[i].name ==="Molecule"){
+                      meshes.data[i].fromStickBallToBall(BALL_AND_STICK_SCALE_VALUE, scene);
+                      }
+                  };
               }
     });
 
@@ -85,8 +101,8 @@
     canvas.addEventListener("dblclick", function(evt){
 
       var pickResult = scene.pick(evt.clientX, evt.clientY);
-      if(pickResult.hit && pickResult.pickedMesh){
-         alert(pickResult.pickedMesh.label + " mol: "+ pickResult.pickedMesh.parent.label);
+      if(pickResult.hit && pickResult.pickedMesh && (pickResult.pickedMesh.name !== "Bound")){
+        // alert(pickResult.pickedMesh.label + " mol: "+ pickResult.pickedMesh.parent.label);
           divProp.innerHTML = "Atome: " + pickResult.pickedMesh.label;
       }
     })

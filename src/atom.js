@@ -1,11 +1,18 @@
-//deuxiem version
-//devra privatiser les champs plutar et ajouter des getter et setter !
+/*
+atom.js: Atom defnition and management function.
 
+For the sake of simplicity, Atoms definitions are
+hardcoded. A more realistic approach could be to
+have each atom definition in its own JSON file
+to be loaded in the 3D mol viwer (via an Ajax
+request for exemple) or directly from any Rest
+service that may provide such a functionality.
+
+ */
 
 Atom = function(name, label, position, scene) {
-    //lignes mystiques
-    // temp atomdata definition before we get a decent  AtomDataManager() class
 
+//Hardcoded atoms definitions :⁻)
         var atomsdef ={ H : {
                                 label : "H",
                                 type : "Hydrogen",
@@ -36,13 +43,13 @@ Atom = function(name, label, position, scene) {
                             }
                         } ;
 
-
+// fetch the right atom from definition object
     var atomdata = atomsdef[label];
 
     BABYLON.Mesh.call(this, "Atom", scene);
     var vd = BABYLON.VertexData.CreateSphere(36, atomdata.radius);
     vd.applyToMesh(this, false);
-    // fin lignes mystiques
+
 
     this.id = name;
     this.position.x = position.x ;
@@ -69,13 +76,9 @@ Atom = function(name, label, position, scene) {
 };
 
 Atom.prototype = Object.create(BABYLON.Mesh.prototype);
-
-// une autres ligne mystique
 Atom.prototype.constructor = Atom;
 
-
 Atom.prototype._initMovement = function() {
-
     var onKeyDown = function(evt) {
         console.log(evt.keyCode);
         if (evt.keyCode == 37) {
