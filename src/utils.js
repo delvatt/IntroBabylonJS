@@ -23,7 +23,6 @@ Bound = function(name, vstart, vend, scene) {
     var vd = BABYLON.VertexData.CreateCylinder(distance, 1, 1, 36);
 
     vd.applyToMesh(this, false);
-    // fin lignes mystiques
 
     this.id = name;
 

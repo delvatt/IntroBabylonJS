@@ -1,6 +1,6 @@
 # Intro to BabylonJS
 
-This HTML5 3D mol viewer is my first attempt on webGL
+This HTML5 3D mol viewer is my first attempt on WebGL
 using [BabylonJS](http://www.babylonjs.com/).
 
 BabylonJS is an open source project and more information

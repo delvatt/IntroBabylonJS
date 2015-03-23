@@ -1,10 +1,10 @@
 /*
-molecule.js: Moleule defnition and management function.
+molecule.js: Moleule definition and management function.
 
 For the sake of simplicity, Molecules definitions are
 hardcoded. A more realistic approach could be to
 have each molecule definition in its own JSON file
-to be loaded in the 3D mol viwer (via an Ajax
+to be loaded in the 3D mol viewer (via an Ajax
 request for exemple) or directly from any Rest
 service that may provide such a functionality.
 
@@ -62,7 +62,6 @@ Molecule = function(name, type, position, scene) {
 
 
     this.id = name;
-    //this.name ="Molecules";
     this.position.x = position.x;
     this.position.z = position.y;
     this.position.y = position.z;
@@ -89,7 +88,7 @@ Molecule.prototype = Object.create(BABYLON.Mesh.prototype);
 Molecule.prototype.constructor = Molecule;
 
 // This function increases the distance between each atoms while keeping the
-// molecule's 3D shape coherent
+// molecule's 3D structure and shape coherent
 Molecule.prototype.scaleUp = function(scaleValue) {
     // Scale up and shift everything
     var dims = ['x', 'y', 'z'];
@@ -109,7 +108,7 @@ Molecule.prototype.scaleUp = function(scaleValue) {
 };
 
 // This function decreases the distance between each atoms while keeping the
-// molecule's 3D shape coherent
+// molecule's 3D structure and shape coherent
 Molecule.prototype.scaleDown = function(scaleValue) {
     // Scale Down and shift everything
     var dims = ['x', 'y', 'z'];
@@ -164,7 +163,6 @@ Molecule.prototype.fromStickBallToBall = function(scaleValue, scene) {
     this.bounds = [] ;
     this.scaleDown(scaleValue) ;
     this.viewMode = BALL_VIEW_MODE ;
-
 };
 
 

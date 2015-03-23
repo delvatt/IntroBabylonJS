@@ -1,10 +1,10 @@
 /*
-atom.js: Atom defnition and management function.
+atom.js: Atom definition and management function.
 
 For the sake of simplicity, Atoms definitions are
 hardcoded. A more realistic approach could be to
 have each atom definition in its own JSON file
-to be loaded in the 3D mol viwer (via an Ajax
+to be loaded in the 3D mol viewer (via an Ajax
 request for exemple) or directly from any Rest
 service that may provide such a functionality.
 
