@@ -40,9 +40,9 @@ Molecule = function(name, type, position, scene) {
                 [3, 5]
             ]
         },
-        Eau: {
+        Water: {
             label: "H2O",
-            type: "Eau",
+            type: "Water",
             nb: 3,
             atoms: [
                 ['H', -2.0801425360, 0.4329727646, 0.0722817289],

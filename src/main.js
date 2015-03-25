@@ -102,7 +102,7 @@ window.onload = function(){
 
       var pickResult = scene.pick(evt.clientX, evt.clientY);
       if(pickResult.hit && pickResult.pickedMesh && (pickResult.pickedMesh.name !== "Bound")){
-          divProp.innerHTML = "Atome: " + pickResult.pickedMesh.label;
+          divProp.innerHTML = "Atom: " + pickResult.pickedMesh.label;
       }
     })
 };

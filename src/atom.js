@@ -29,7 +29,7 @@ Atom = function(name, label, position, scene) {
                             } ,
                         N : {
                                 label : "N",
-                                type : "Azote",
+                                type : "Nitrogen",
                                 free_elc : 4,
                                 radius : 4,
                                 color : {r:0, g:0, b:1}
