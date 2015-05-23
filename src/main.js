@@ -1,5 +1,6 @@
-﻿﻿/*
-main.js: Rendering function.
+﻿﻿/* Intro to BabylonJS (version 0.1.0)
+ *
+ * main.js: Rendering function.
  */
 
 window.onload = function(){
@@ -67,7 +68,7 @@ window.onload = function(){
                       if(meshes.data[i].name ==="Molecule"){
                       meshes.data[i].fromBallToStickBall(BALL_AND_STICK_SCALE_VALUE, scene);
                       }
-                  };
+                  }
               }
     });
 
@@ -81,7 +82,7 @@ window.onload = function(){
                       if(meshes.data[i].name ==="Molecule"){
                       meshes.data[i].fromStickBallToBall(BALL_AND_STICK_SCALE_VALUE, scene);
                       }
-                  };
+                  }
               }
     });
 
@@ -104,5 +105,5 @@ window.onload = function(){
       if(pickResult.hit && pickResult.pickedMesh && (pickResult.pickedMesh.name !== "Bound")){
           divProp.innerHTML = "Atom: " + pickResult.pickedMesh.label;
       }
-    })
+    });
 };
