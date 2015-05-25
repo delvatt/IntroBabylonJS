@@ -1,7 +1,7 @@
-/*
-utils.js: Utilities functions.
-Don't mind Globals !
-
+/* Intro to BabylonJS (version 0.1.0)
+ *
+ * utils.js: Utilities functions.
+ * Don't mind Globals !
  */
 
 // Globals (To avoid)
@@ -107,4 +107,4 @@ getTranslationVect = function(vstart, vend) {
     v1 = vstart.subtract(vend);
     v1.normalize();
     return v1;
-}
+};

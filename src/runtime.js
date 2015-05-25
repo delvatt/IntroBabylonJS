@@ -1,9 +1,9 @@
-/*
-runtime.js: Basic Scene set up function.
-This is a common utility function in BabylonJS official samples
-and aims to provide minimal objects required in a simple scene
-(scene, camera, light, etc.)
-
+/* Intro to BabylonJS (version 0.1.0)
+ *
+ * runtime.js: Basic Scene set up function.
+ * This is a common utility function in BabylonJS official samples
+ * and aims to provide minimal objects required in a simple scene
+ * (scene, camera, light, etc.)
  */
 
 function createSceneTuto(engine) {
@@ -27,7 +27,5 @@ function createSceneTuto(engine) {
         ethanol.rotation.x += 0.01;
         ethanol.rotation.z += 0.02;
     });
-
 return scene;
-
 }
