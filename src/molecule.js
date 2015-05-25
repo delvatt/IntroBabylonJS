@@ -1,13 +1,12 @@
-/*
-molecule.js: Moleule definition and management function.
-
-For the sake of simplicity, Molecules definitions are
-hardcoded. A more realistic approach could be to
-have each molecule definition in its own JSON file
-to be loaded in the 3D mol viewer (via an Ajax
-request for exemple) or directly from any Rest
-service that may provide such a functionality.
-
+/* Intro to BabylonJS (version 0.1.0)
+ *
+ * molecule.js: Moleule definition and management function.
+ * For the sake of simplicity, Molecules definitions are
+ * hardcoded. A more realistic approach could be to
+ * have each molecule definition in its own JSON file
+ * to be loaded in the 3D mol viewer (via an Ajax
+ * request for exemple) or directly from any Rest
+ * service that may provide such a functionality.
  */
 
 Molecule = function(name, type, position, scene) {
@@ -80,7 +79,7 @@ Molecule = function(name, type, position, scene) {
         var atm = new Atom(this.type + ": " + this.moldata.atoms[i][0] + i, this.moldata.atoms[i][0], new BABYLON.Vector3(this.moldata.atoms[i][1], this.moldata.atoms[i][2], this.moldata.atoms[i][3]), scene);
         atm.parent = this;
         this.atoms.push(atm);
-    };
+    }
     this.scaleUp(INIT_BALL_SCALE_VALUE);
 };
 
@@ -135,7 +134,7 @@ Molecule.prototype.fromBallToStickBall = function(scaleValue, scene) {
     if ((this.viewMode != BALL_VIEW_MODE) || scaleValue != BALL_AND_STICK_SCALE_VALUE) {
         console.log("fromBallToStickBall: you passed a wrong scaleValue or scaling from a wong viewMode");
         return ; // please, consider throwing an exception instead ! :)
-    };
+    }
 
     this.scaleUp(scaleValue) ;
     for (var i = 0; i < this.moldata.bounds.length; i++) {
@@ -144,7 +143,7 @@ Molecule.prototype.fromBallToStickBall = function(scaleValue, scene) {
         var bds = new Bound(this.type + ": " + this.atoms[this.moldata.bounds[i][0]] + "-" +this.atoms[this.moldata.bounds[i][1]], vstart, vend, scene);
         bds.parent = this;
         this.bounds.push(bds);
-    };
+    }
     this.viewMode = BALL_AND_STICK_VIEW_MODE;
 
 
@@ -156,10 +155,10 @@ Molecule.prototype.fromStickBallToBall = function(scaleValue, scene) {
     if ((this.viewMode != BALL_AND_STICK_VIEW_MODE ) || scaleValue != BALL_AND_STICK_SCALE_VALUE) {
         console.log("fromBallToStickBall: you passed a wrong scaleValue or scaling from a wong viewMode");
         return ; // please, consider throwing an exception instead ! :)
-    };
+    }
     for (var i = 0; i < this.bounds.length; i++) {
     this.bounds[i].dispose() ;
-    };
+    }
     this.bounds = [] ;
     this.scaleDown(scaleValue) ;
     this.viewMode = BALL_VIEW_MODE ;
